@@ -1,0 +1,78 @@
+#game{
+    margin: auto;
+    width: 500px;
+    height: 800px;
+    border: solid 1px;
+    overflow: hidden;
+    background-image: url("background.png");
+    z-index: 1;
+    position: re
+}
+
+#bird{
+    width: 50px;
+    height: 50px;
+    background-image: url("imgs/flappybird.png");
+    background-size: cover;                      
+    background-repeat: no-repeat;
+    background-position: center center; 
+    position: relative;
+    top: 350px;
+    left: 80px;
+    z-index: 2;
+
+}
+
+#top{
+    transform: rotate(180deg);
+    height: 200px;
+    width: 60px;
+    position: absolute;
+    background-image: url("imgs/pipe.png");  
+}
+
+#bottom{
+    background-image: url("imgs/pipe.png");                      
+    position: absolute;
+    height: 400px;
+    width: 60px;
+    top: 400px;
+}
+
+#pipe{
+    width: 60px;
+    height: 800px;
+    position: relative;
+    top:-50px;
+    background-color: transparent;
+    left: 500px;
+    /* z-index: 0; */
+    
+}
+
+#hole{
+    position: absolute;
+    height: 200px;
+    width: 60px;
+    top: 200px;
+    background-color: transparent;
+}
+
+@keyframes pipe-move {
+    0% {left: 500px;}
+    100% {left: -60px;}    
+}
+
+#start{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 400px;
+    text-align: center;
+    z-index: 2;
+}
+
+#scorebox{
+    text-align: center;
+    margin-top: 50px;
+}
