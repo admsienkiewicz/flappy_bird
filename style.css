@@ -33,7 +33,7 @@ body{
     height: 800px;
     border: solid 5px;
     overflow: hidden;
-    background-image: url("/imgs/background.png");
+    background-image: url("imgs/background.png");
     z-index: 1;
     grid-column: 2;
     margin-left: 80px;
