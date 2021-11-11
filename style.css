@@ -4,7 +4,7 @@
     height: 800px;
     border: solid 1px;
     overflow: hidden;
-    background-image: url("background.png");
+    background-image: url("imgs/background.png");
     z-index: 1;
     position: re
 }
