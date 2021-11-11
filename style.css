@@ -1,14 +1,69 @@
-#game{
-    margin: auto;
-    width: 500px;
-    height: 800px;
-    border: solid 1px;
-    overflow: hidden;
-    background-image: url("imgs/background.png");
-    z-index: 1;
-    position: re
+@import url(//db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular);
+*{
+    font-family: "PixelarRegularW01-Regular";
+    font-size: larger;    
 }
 
+body{
+    background-color: rgb(97, 176, 207);
+}
+
+.grid{
+    display: grid;
+    margin-top: 80px;
+}
+
+
+#best-scores{
+    width: 400px;
+    height: 800px;
+    grid-column: 1;
+    border: 3px solid;
+    margin-left: 110px;
+    border-radius: 3%;
+    background-color: rgba(255, 255, 255, 0.336);
+    text-align: center;
+    size: 0.1em;
+
+}
+#game{
+    
+    width: 500px;
+    height: 800px;
+    border: solid 5px;
+    overflow: hidden;
+    background-image: url("/imgs/background.png");
+    z-index: 1;
+    grid-column: 2;
+    margin-left: 80px;
+}
+
+#leaderboard{
+    grid-column: 3;
+    border: 3px solid;
+    margin-right: 80px;
+    width: 400px;
+    height: 800px;
+    margin-left: 80px;
+    border-radius: 3%;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+
+}
+
+#start-box{
+    position: absolute;
+    height: 200px;
+    width: 300px;
+    top: 400px;
+    left: 42%;
+    text-align: center;
+    color: white;
+    size: 100px;
+    background-color: transparent;
+    border-radius: 5%;
+    z-index: 3;
+}
 #bird{
     width: 50px;
     height: 50px;
@@ -25,7 +80,7 @@
 
 #top{
     transform: rotate(180deg);
-    height: 200px;
+    height: 100px;
     width: 60px;
     position: absolute;
     background-image: url("imgs/pipe.png");  
@@ -34,9 +89,9 @@
 #bottom{
     background-image: url("imgs/pipe.png");                      
     position: absolute;
-    height: 400px;
+    height: 500px;
     width: 60px;
-    top: 400px;
+    top: 300px;
 }
 
 #pipe{
@@ -54,7 +109,7 @@
     position: absolute;
     height: 200px;
     width: 60px;
-    top: 200px;
+    top: 100px;
     background-color: transparent;
 }
 
@@ -65,14 +120,26 @@
 
 #start{
     position: absolute;
-    width: 100px;
+    width: 200px;
     height: 100px;
-    top: 400px;
+    top: 23%;
+    left: 12%;
     text-align: center;
     z-index: 2;
+    background-image: url("imgs/start\ button.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: none;
 }
 
 #scorebox{
     text-align: center;
     margin-top: 50px;
+    position: absolute;
+    top: 70px;
+    left: 750px;
+    color: white;
+    z-index: 5;
+
 }

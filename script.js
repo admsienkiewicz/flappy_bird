@@ -3,8 +3,10 @@ let hole = document.getElementById("hole");
 let topPipe = document.getElementById("top");
 let bottomPipe = document.getElementById("bottom");
 let bird = document.getElementById("bird");
-let startButton = document.getElementById('start');
+let startMessage = document.getElementById('start-message');
+let startBox = document.getElementById('start-box');
 let scoreBox = document.getElementById("scorebox");
+let personalBests = document.getElementById("score-list");
 let jumping = 0;
 let over = false;
 let started = false;
@@ -14,9 +16,13 @@ let score = 0;
 let animationSpeed;
 
 
+let scoreList = [];
+let uniqueScores;
+
 function startGame() {
 
     if (!started) {
+        scoreBox.textContent = "Score: 0";
         animationSpeed = 2;
         score = 0;
         pipe.style.animation = "none"
@@ -30,20 +36,34 @@ function startGame() {
             checkIfOver = setInterval(gameOver, 5);
 
         }, 20)
-        startButton.style.visibility = "hidden";
+        startBox.style.visibility = "hidden";
         over = false;
         started = true;
 
     }
     if (over) {
 
+        scoreList.push(score);
+        scoreList.sort(function compareNumbers(a, b) {
+            return a - b
+         });
+        scoreList.reverse();
+        uniqueScores = [...new Set(scoreList)];
+
+        personalBests.textContent = ""
+
+
+        for(let i in uniqueScores){
+            if (i<10){
+            let li = document.createElement("li")
+            li.textContent = uniqueScores[i];
+            personalBests.appendChild(li);
+            }else break;
+        }
+
         clearInterval(gravityInterval)
         started = false;
     }
-
-
-
-    console.log('function is called')
 }
 
 
@@ -109,7 +129,10 @@ function gameOver() {
             pipe.style.animationPlayState = "paused"
             over = true;
             startGame();
-            startButton.style.visibility = "visible";
+            let newline = '\r\n'
+            startMessage.textContent= "GAME OVER SCORE: " + score;
+            startBox.style.visibility = "visible";
+
             clearInterval(checkIfOver);
         }
 
@@ -117,7 +140,8 @@ function gameOver() {
             pipe.style.animationPlayState = "paused";
             over = true;
             startGame();
-            startButton.style.visibility = "visible";
+            startMessage.textContent= "GAME OVER SCORE: " + score;
+            startBox.style.visibility = "visible";
             clearInterval(checkIfOver);
 
         }

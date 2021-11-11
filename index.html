@@ -8,14 +8,31 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p id="scorebox">SCORE: 0</p>
-    <button id="start" onclick="startGame()">|></button>
-    <div id="game">
-        <div id="bird"></div>
-        <div id="pipe">
-            <div id="top"></div>
-            <div id="hole"></div>
-            <div id="bottom"></div>
+    <div id="scorebox">SCORE: 0</div>
+    <div id="start-box">
+        <h7 id='start-message'>START GAME</h7>
+        <div id="start" onclick="startGame()"></div> 
+    </div>
+    <div class="grid">
+        <div id="best-scores">
+            <h1>YOUR BEST SCORES</h1>
+            <ol id="score-list">
+                
+            </ol>
+                
+            
+        </div>
+        <div id="game">
+            
+            <div id="bird"></div>
+            <div id="pipe">
+                <div id="top"></div>
+                <div id="hole"></div>
+                <div id="bottom"></div>
+            </div>
+        </div>
+        <div id="leaderboard">
+            <h1>LEADERBOARD</h1>
         </div>
     </div>
     <script src="script.js"></script>
