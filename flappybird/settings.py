@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
-import django_heroku
-from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +26,7 @@ SECRET_KEY = 'django-insecure-9=jaww_-*kky@(5y%#0*vbnnu(*ny4__$%g3@-p9-o*m&r+_se
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'app-flappy.herokuapp.com' ]
+ALLOWED_HOSTS = []
 
 
 # Application definition
