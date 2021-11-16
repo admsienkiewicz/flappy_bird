@@ -1,1 +1,1 @@
-web: gunicorn flappybird.wsgi
+web: gunicorn flappybird.wsgi --log-file -
