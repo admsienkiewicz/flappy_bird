@@ -63,13 +63,14 @@ function startGame() {
 function gravity() {
   let birdStyle = window.getComputedStyle(bird);
   let birdTop = parseInt(birdStyle.getPropertyValue("top"));
-  if (birdTop < 750 && birdTop > -50) {
-    bird.style.top = birdTop + 5 + "px";
+  if (!jumping) {
+    bird.style.top = birdTop + 3 + "px";
   }
 }
 
 function jump() {
   if (started) {
+    jumping = 1;
     let jumpTime = 0;
 
     let jumpingInterval = setInterval(function () {
@@ -77,12 +78,13 @@ function jump() {
       let birdTop = parseInt(birdStyle.getPropertyValue("top"));
 
       if (birdTop > 100) {
-        bird.style.top = parseInt(birdTop) - 7 + "px";
+        bird.style.top = parseInt(birdTop) - 5 + "px";
       }
       // jumpTime == 15 * 10 ms
       if (jumpTime > 15 || over) {
         clearInterval(jumpingInterval);
         jumpTime = 0;
+        jumping = 0;
       }
       jumpTime++;
     }, 10);
