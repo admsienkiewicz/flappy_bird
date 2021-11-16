@@ -69,15 +69,14 @@ ol {
 
 #start-box {
   position: absolute;
-  height: 250px;
-  width: 200px;
+  height: 30%;
+  width: 40%;
   top: 150px;
-  left: 150px;
+  left: 30%;
   text-align: center;
   color: white;
   size: 100px;
   background-color: transparent;
-  border-radius: 5%;
   z-index: 3;
 }
 
@@ -144,13 +143,13 @@ ol {
 
 #start {
   position: relative;
-  width: 200px;
-  height: 100px;
-  left: -10px;
+  width: 100%;
+  height: 40%;
+  left: 0;
   text-align: center;
   z-index: 2;
   background-image: url("imgs/start\ button.png");
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
   border: none;
