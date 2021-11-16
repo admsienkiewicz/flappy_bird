@@ -77,7 +77,7 @@ function jump() {
       let birdStyle = window.getComputedStyle(bird);
       let birdTop = parseInt(birdStyle.getPropertyValue("top"));
 
-      if (birdTop > 100) {
+      if (birdTop > 0) {
         bird.style.top = parseInt(birdTop) - 5 + "px";
       }
       // jumpTime == 15 * 10 ms
