@@ -167,7 +167,7 @@ function gameOver() {
 
 
 function getScores(){
-  fetch('http://127.0.0.1:8000/score-api')
+  fetch('/score-api')
     .then(response => response.json())
     .then(data => {
       console.log(data)
@@ -176,7 +176,7 @@ function getScores(){
 }
 
 function getBestScores(username){
-  fetch('http://127.0.0.1:8000/best-scores/' + username)
+  fetch('/best-scores/' + username)
     .then(response => response.json())
     .then(data => {
       console.log(data)
@@ -192,7 +192,7 @@ function postScores(username, userScore){
     score : userScore
   }
 
-  fetch('http://127.0.0.1:8000/score-api', {
+  fetch('/score-api', {
   method: 'POST', // or 'PUT'
   headers: {
     'Content-Type': 'application/json',
