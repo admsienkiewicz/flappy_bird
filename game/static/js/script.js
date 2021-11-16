@@ -7,6 +7,9 @@ let startMessage = document.getElementById("start-message");
 let startBox = document.getElementById("start-box");
 let scoreBox = document.getElementById("scorebox");
 let personalBests = document.getElementById("score-list");
+let leaderBoard = document.getElementById("leaderboard-ol");
+let usernameBox = document.getElementById("username");
+let enterUsernameDiv = document.getElementById("enter-username");
 let jumping = 0;
 let over = false;
 let started = false;
@@ -15,16 +18,48 @@ let checkIfOver;
 let score = 0;
 let animationSpeed;
 
-let scoreList = [];
+
+
+let bestScoreList = [];
 let uniqueScores;
+let leaders = {};
+let user;
+
+
+
+function updateLeaderboard(){
+  getScores();
+  leaderBoard.textContent = "";
+  for(let i in leaders){
+    if (i < 10) {
+        let li = document.createElement("li");
+        li.textContent = leaders[i]["user"] + "  " + leaders[i]["score"];
+        leaderBoard.appendChild(li);
+    }
+  } 
+}
+
+function saveUser(){
+  user = usernameBox.value;
+  updateLeaderboard();
+  console.log(leaders);
+  updateLeaderboard();
+  enterUsernameDiv.style.display = "none"
+
+}
 
 function startGame() {
+  updateLeaderboard();
   if (!started) {
     scoreBox.textContent = "Score: 0";
     animationSpeed = 2;
     score = 0;
     pipe.style.animation = "none";
     pipe.style.left = "500px";
+    hole.style.top = "300px"
+    topPipe.style.height = hole.style.top;
+    bottomPipe.style.top = parseInt(hole.style.top) + 200 + "px";
+    bottomPipe.style.height = 800 - parseInt(bottomPipe.style.top) + "px";
     bird.style.top = "350px";
 
     setTimeout(function () {
@@ -32,29 +67,22 @@ function startGame() {
         "pipe-move " + parseInt(animationSpeed) + "s infinite linear";
       gravityInterval = setInterval(gravity, 10);
       checkIfOver = setInterval(gameOver, 5);
+      started = true;
     }, 20);
     startBox.style.visibility = "hidden";
     over = false;
-    started = true;
   }
   if (over) {
-    scoreList.push(score);
-    scoreList.sort(function compareNumbers(a, b) {
-      return a - b;
-    });
-    scoreList.reverse();
-    uniqueScores = [...new Set(scoreList)];
-
+    postScores(user, score)
     personalBests.textContent = "";
-
-    for (let i in uniqueScores) {
+    getBestScores(user);
+    for (let i in bestScoreList) {
       if (i < 10) {
         let li = document.createElement("li");
-        li.textContent = uniqueScores[i];
+        li.textContent = bestScoreList[i]['score'];
         personalBests.appendChild(li);
       } else break;
-    }
-
+    } 
     clearInterval(gravityInterval);
     started = false;
   }
@@ -98,7 +126,6 @@ pipe.addEventListener("animationiteration", function () {
   topPipe.style.height = hole.style.top;
   bottomPipe.style.top = parseInt(hole.style.top) + 200 + "px";
   bottomPipe.style.height = 800 - parseInt(bottomPipe.style.top) + "px";
-
   score++;
   scoreBox.textContent = "Score: " + score;
 });
@@ -136,4 +163,47 @@ function gameOver() {
       clearInterval(checkIfOver);
     }
   }
+}
+
+
+function getScores(){
+  fetch('http://127.0.0.1:8000/game/score-api')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      leaders = data;
+    } )
+}
+
+function getBestScores(username){
+  fetch('http://127.0.0.1:8000/game/best-scores/' + username)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      bestScoreList = data;
+    } )
+}
+
+
+
+function postScores(username, userScore){
+  let data = {
+    user : username,
+    score : userScore
+  }
+
+  fetch('http://127.0.0.1:8000/game/score-api', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
 }

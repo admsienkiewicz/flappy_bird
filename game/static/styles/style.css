@@ -46,7 +46,7 @@ ol {
   height: 800px;
   border: solid 5px;
   overflow: hidden;
-  background-image: url("imgs/background.png");
+  background-image: url("/static/imgs/background.png");
   z-index: 1;
   /* grid-column: 2; */
   margin-left: 50px;
@@ -88,7 +88,7 @@ ol {
 #bird {
   width: 50px;
   height: 50px;
-  background-image: url("imgs/flappybird.png");
+  background-image: url("/static/imgs/flappybird.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -103,11 +103,11 @@ ol {
   height: 100px;
   width: 60px;
   position: absolute;
-  background-image: url("imgs/pipe.png");
+  background-image: url("/static/imgs/pipe.png");
 }
 
 #bottom {
-  background-image: url("imgs/pipe.png");
+  background-image: url("/static/imgs/pipe.png");
   position: absolute;
   height: 500px;
   width: 60px;
@@ -148,7 +148,7 @@ ol {
   left: 0;
   text-align: center;
   z-index: 2;
-  background-image: url("imgs/start\ button.png");
+  background-image: url("/static/imgs/start\ button.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -161,4 +161,35 @@ ol {
   left: 50px;
   color: white;
   z-index: 5;
+}
+
+#enter-username{
+  text-align: center;
+  position: absolute;
+  background-color: rgba(116, 160, 185, 0.726);
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+}
+
+#username{
+  position: relative;
+  top: 20%;
+  background-color: rgba(250, 235, 215, 0.753);
+  height: 10%;
+  width: 20%;
+  font-size: 3em;
+}
+
+#enter-username h1{
+  position: relative;
+  top: 20%;
+}
+
+.btn{
+  position: absolute;
+  left: 45%;
+  top: 40%;
+  width: 10%;
+  height: 10%;
 }
