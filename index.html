@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" onclick="jump()">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GAME</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="//db.onlinewebfonts.com/c/b2e75c336df191233b3096682c9ee6be?family=PixelarRegularW01-Regular" rel="stylesheet" type="text/css"/> 
-</head>
-<body>
-    <div id="scorebox">SCORE: 0</div>
-    <div id="start-box">
-        <h7 id='start-message'>START GAME</h7>
-        <div id="start" onclick="startGame()"></div> 
-    </div>
-    <div class="grid">
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="col">
         <div id="best-scores">
-            <h1>YOUR BEST SCORES</h1>
-            <ol id="score-list">
-                
-            </ol>
-                
-            
+          <h1>YOUR BEST SCORES</h1>
+          <ol id="score-list"></ol>
         </div>
+      </div>
+      <div class="col">
         <div id="game">
-            
-            <div id="bird"></div>
-            <div id="pipe">
-                <div id="top"></div>
-                <div id="hole"></div>
-                <div id="bottom"></div>
-            </div>
+          <div id="scorebox">SCORE: 0</div>
+          <div id="start-box">
+            <h7 id="start-message">START GAME</h7>
+            <div id="start" onclick="startGame()"></div>
+          </div>
+          <div id="bird"></div>
+          <div id="pipe">
+            <div id="top"></div>
+            <div id="hole"></div>
+            <div id="bottom"></div>
+          </div>
         </div>
+      </div>
+      <div class="col">
         <div id="leaderboard">
-            <h1>LEADERBOARD</h1>
+          <h1>LEADERBOARD</h1>
         </div>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
