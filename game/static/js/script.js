@@ -18,45 +18,39 @@ let checkIfOver;
 let score = 0;
 let animationSpeed;
 
-
-
 let bestScoreList = [];
 let uniqueScores;
 let leaders = {};
 let user;
 
-
-
-function updateLeaderboard(){
+function updateLeaderboard() {
   getScores();
   leaderBoard.textContent = "";
-  for(let i in leaders){
+  for (let i in leaders) {
     if (i < 10) {
-        let li = document.createElement("li");
-        li.textContent = leaders[i]["user"] + "  " + leaders[i]["score"];
-        leaderBoard.appendChild(li);
+      let li = document.createElement("li");
+      li.textContent = leaders[i]["user"] + "  " + leaders[i]["score"];
+      leaderBoard.appendChild(li);
     }
-  } 
+  }
 }
 
-function saveUser(){
+function saveUser() {
   user = usernameBox.value;
   updateLeaderboard();
   console.log(leaders);
-  updateLeaderboard();
-  enterUsernameDiv.style.display = "none"
-
+  enterUsernameDiv.style.display = "none";
 }
 
 function startGame() {
-  updateLeaderboard();
+  
   if (!started) {
     scoreBox.textContent = "Score: 0";
     animationSpeed = 2;
     score = 0;
     pipe.style.animation = "none";
     pipe.style.left = "500px";
-    hole.style.top = "300px"
+    hole.style.top = "300px";
     topPipe.style.height = hole.style.top;
     bottomPipe.style.top = parseInt(hole.style.top) + 200 + "px";
     bottomPipe.style.height = 800 - parseInt(bottomPipe.style.top) + "px";
@@ -73,17 +67,18 @@ function startGame() {
     over = false;
   }
   if (over) {
-    postScores(user, score)
+    postScores(user, score);
     personalBests.textContent = "";
     getBestScores(user);
     for (let i in bestScoreList) {
       if (i < 10) {
         let li = document.createElement("li");
-        li.textContent = bestScoreList[i]['score'];
+        li.textContent = bestScoreList[i]["score"];
         personalBests.appendChild(li);
       } else break;
-    } 
+    }
     clearInterval(gravityInterval);
+    updateLeaderboard();
     started = false;
   }
 }
@@ -165,45 +160,42 @@ function gameOver() {
   }
 }
 
-
-function getScores(){
-  fetch('/score-api')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
+function getScores() {
+  fetch("/score-api")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
       leaders = data;
-    } )
+    });
 }
 
-function getBestScores(username){
-  fetch('/best-scores/' + username)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
+function getBestScores(username) {
+  fetch("/best-scores/" + username)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
       bestScoreList = data;
-    } )
+    });
 }
 
-
-
-function postScores(username, userScore){
+function postScores(username, userScore) {
   let data = {
-    user : username,
-    score : userScore
-  }
+    user: username,
+    score: userScore,
+  };
 
-  fetch('/score-api', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data),
-})
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
+  fetch("/score-api", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
