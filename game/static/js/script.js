@@ -16,10 +16,15 @@ let started = false;
 let gravityInterval;
 let checkIfOver;
 let score = 0;
-let animationSpeed;
 
 let uniqueScores;
 let user;
+
+async function saveUser() {
+  user = usernameBox.value;
+  updateLeaderboard();
+  enterUsernameDiv.style.display = "none";
+}
 
 async function updateLeaderboard() {
   const leaders = await getScores();
@@ -32,15 +37,20 @@ async function updateLeaderboard() {
     }
   }
 }
-
-async function saveUser() {
-  user = usernameBox.value;
-  updateLeaderboard();
-  enterUsernameDiv.style.display = "none";
+async function updateBestScores() {
+  personalBests.textContent = "";
+  const userBestScores = await getBestScores(user);
+  console.log(userBestScores);
+  for (let i in userBestScores) {
+    if (i < 10) {
+      let li = document.createElement("li");
+      li.textContent = userBestScores[i]["score"];
+      personalBests.appendChild(li);
+    }
+  }
 }
 
 async function startGame() {
-  
   if (!started) {
     scoreBox.textContent = "Score: 0";
     animationSpeed = 2;
@@ -67,16 +77,7 @@ async function startGame() {
     clearInterval(gravityInterval);
     started = false;
     const res = await postScores(user, score);
-    personalBests.textContent = "";
-    const userBestScores = await getBestScores(user);
-    console.log(userBestScores)
-    for (let i in userBestScores) {
-      if (i < 10) {
-        let li = document.createElement("li");
-        li.textContent = userBestScores[i]["score"];
-        personalBests.appendChild(li);
-      }
-    }
+    updateBestScores();
     updateLeaderboard();
   }
 }
@@ -140,7 +141,6 @@ function gameOver() {
       pipe.style.animationPlayState = "paused";
       over = true;
       startGame();
-      let newline = "\r\n";
       startMessage.textContent = "GAME OVER SCORE: " + score;
       startBox.style.visibility = "visible";
 
@@ -159,18 +159,18 @@ function gameOver() {
 }
 
 async function getScores() {
-  const response = await fetch("/score-api")
+  const response = await fetch("/score-api");
   return response.json();
 }
 
 async function getBestScores(username) {
-  const response = await fetch("/best-scores/" + username)
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log(data);
-    //   bestScoreList = data;
-    // });
-    return response.json();
+  const response = await fetch("/best-scores/" + username);
+  // .then((response) => response.json())
+  // .then((data) => {
+  //   console.log(data);
+  //   bestScoreList = data;
+  // });
+  return response.json();
 }
 
 async function postScores(username, userScore) {
@@ -178,12 +178,12 @@ async function postScores(username, userScore) {
     user: username,
     score: userScore,
   };
- const response = await fetch("/score-api", {
+  const response = await fetch("/score-api", {
     method: "POST", // or 'PUT'
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
+  });
   return response.json();
-  }
+}
