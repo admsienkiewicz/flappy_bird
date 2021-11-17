@@ -18,13 +18,11 @@ let checkIfOver;
 let score = 0;
 let animationSpeed;
 
-let bestScoreList = [];
 let uniqueScores;
-let leaders = {};
 let user;
 
-function updateLeaderboard() {
-  getScores();
+async function updateLeaderboard() {
+  const leaders = await getScores();
   leaderBoard.textContent = "";
   for (let i in leaders) {
     if (i < 10) {
@@ -35,14 +33,13 @@ function updateLeaderboard() {
   }
 }
 
-function saveUser() {
+async function saveUser() {
   user = usernameBox.value;
   updateLeaderboard();
-  console.log(leaders);
   enterUsernameDiv.style.display = "none";
 }
 
-function startGame() {
+async function startGame() {
   
   if (!started) {
     scoreBox.textContent = "Score: 0";
@@ -67,19 +64,20 @@ function startGame() {
     over = false;
   }
   if (over) {
-    postScores(user, score);
-    personalBests.textContent = "";
-    getBestScores(user);
-    for (let i in bestScoreList) {
-      if (i < 10) {
-        let li = document.createElement("li");
-        li.textContent = bestScoreList[i]["score"];
-        personalBests.appendChild(li);
-      } else break;
-    }
     clearInterval(gravityInterval);
     updateLeaderboard();
     started = false;
+    const res = await postScores(user, score);
+    personalBests.textContent = "";
+    const userBestScores = await getBestScores(user);
+    console.log(userBestScores)
+    for (let i in userBestScores) {
+      if (i < 10) {
+        let li = document.createElement("li");
+        li.textContent = userBestScores[i]["score"];
+        personalBests.appendChild(li);
+      }
+    }
   }
 }
 
@@ -160,42 +158,32 @@ function gameOver() {
   }
 }
 
-function getScores() {
-  fetch("/score-api")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      leaders = data;
-    });
+async function getScores() {
+  const response = await fetch("/score-api")
+  return response.json();
 }
 
-function getBestScores(username) {
-  fetch("/best-scores/" + username)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      bestScoreList = data;
-    });
+async function getBestScores(username) {
+  const response = await fetch("/best-scores/" + username)
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log(data);
+    //   bestScoreList = data;
+    // });
+    return response.json();
 }
 
-function postScores(username, userScore) {
+async function postScores(username, userScore) {
   let data = {
     user: username,
     score: userScore,
   };
-
-  fetch("/score-api", {
+ const response = await fetch("/score-api", {
     method: "POST", // or 'PUT'
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
+  return response.json();
+  }
