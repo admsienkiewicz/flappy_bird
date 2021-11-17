@@ -65,7 +65,6 @@ async function startGame() {
   }
   if (over) {
     clearInterval(gravityInterval);
-    updateLeaderboard();
     started = false;
     const res = await postScores(user, score);
     personalBests.textContent = "";
@@ -78,6 +77,7 @@ async function startGame() {
         personalBests.appendChild(li);
       }
     }
+    updateLeaderboard();
   }
 }
 
