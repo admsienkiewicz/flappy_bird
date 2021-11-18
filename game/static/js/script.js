@@ -52,9 +52,14 @@ async function updateBestScores() {
         i++;
       }
     }
-    let li = document.createElement("li");
+    try{
+      let li = document.createElement("li");
     li.textContent = userBestScores[i]["score"];
     personalBests.appendChild(li);
+    }catch{
+      console.log("i out of bounds")
+    }
+    
     if (personalBests.childElementCount == 10) break;
   }
 }
