@@ -42,7 +42,6 @@ async function updateLeaderboard() {
 async function updateBestScores() {
   personalBests.textContent = "";
   const userBestScores = await getBestScores(user);
-  console.log(userBestScores);
   for (let i in userBestScores) {
     if (i > 0) {
       while (userBestScores[i - 1]["score"] == userBestScores[i]["score"]) {
@@ -52,14 +51,13 @@ async function updateBestScores() {
         i++;
       }
     }
-    try{
+    try {
       let li = document.createElement("li");
-    li.textContent = userBestScores[i]["score"];
-    personalBests.appendChild(li);
-    }catch{
-      console.log("i out of bounds")
+      li.textContent = userBestScores[i]["score"];
+      personalBests.appendChild(li);
+    } catch {
     }
-    
+
     if (personalBests.childElementCount == 10) break;
   }
 }
@@ -69,12 +67,15 @@ async function startGame() {
     scoreBox.textContent = "Score: 0";
     animationSpeed = 2;
     score = 0;
+    pipe.style.height = "100vh";
+    let pipeHeight = window.getComputedStyle(pipe).getPropertyValue("height");
     pipe.style.animation = "none";
     pipe.style.left = "500px";
-    hole.style.top = "300px";
+    hole.style.top = "200px";
     topPipe.style.height = hole.style.top;
     bottomPipe.style.top = parseInt(hole.style.top) + 200 + "px";
-    bottomPipe.style.height = 800 - parseInt(bottomPipe.style.top) + "px";
+    bottomPipe.style.height =
+      parseInt(pipeHeight) - parseInt(bottomPipe.style.top) + "px";
     bird.style.top = "350px";
 
     setTimeout(function () {
@@ -129,11 +130,14 @@ function jump() {
 
 pipe.addEventListener("animationiteration", function () {
   let random = Math.random();
-  let generatedTop = random * 400 + 100;
+  let pipeHeight = window.getComputedStyle(pipe).getPropertyValue("height");
+  let generatedTop = random * (parseInt(pipeHeight) / 2) + 100;
+  console.log(generatedTop);
   hole.style.top = generatedTop + "px";
   topPipe.style.height = hole.style.top;
   bottomPipe.style.top = parseInt(hole.style.top) + 200 + "px";
-  bottomPipe.style.height = 800 - parseInt(bottomPipe.style.top) + "px";
+  bottomPipe.style.height =
+    parseInt(pipeHeight) - parseInt(bottomPipe.style.top) + "px";
   score++;
   scoreBox.textContent = "Score: " + score;
 });

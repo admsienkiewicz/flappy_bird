@@ -199,7 +199,11 @@ ol {
   #game {
     width: 100vw;
     margin: 0;
-    height: 800px;
+    height: 100vh;
+  }
+
+  #pipe {
+    height: 100vh;
   }
 
   #leaderboard {
