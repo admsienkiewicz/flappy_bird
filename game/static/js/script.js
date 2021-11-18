@@ -23,6 +23,7 @@ let user;
 async function saveUser() {
   user = usernameBox.value;
   updateLeaderboard();
+  updateBestScores();
   enterUsernameDiv.style.display = "none";
 }
 
@@ -37,16 +38,24 @@ async function updateLeaderboard() {
     }
   }
 }
+
 async function updateBestScores() {
   personalBests.textContent = "";
   const userBestScores = await getBestScores(user);
   console.log(userBestScores);
   for (let i in userBestScores) {
-    if (i < 10) {
-      let li = document.createElement("li");
-      li.textContent = userBestScores[i]["score"];
-      personalBests.appendChild(li);
+    if (i > 0) {
+      while (userBestScores[i - 1]["score"] == userBestScores[i]["score"]) {
+        if ((i = userBestScores.length)) {
+          break;
+        }
+        i++;
+      }
     }
+    let li = document.createElement("li");
+    li.textContent = userBestScores[i]["score"];
+    personalBests.appendChild(li);
+    if (personalBests.childElementCount == 10) break;
   }
 }
 
@@ -156,6 +165,10 @@ function gameOver() {
       clearInterval(checkIfOver);
     }
   }
+}
+
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
 }
 
 async function getScores() {
