@@ -179,6 +179,7 @@ ol {
   height: 10%;
   width: 20%;
   font-size: 3em;
+  text-align: center;
 }
 
 #enter-username h1 {
@@ -212,5 +213,15 @@ ol {
 
   #best-scores {
     margin: 10px 0 0;
+  }
+
+  #username{
+    width: 80vw;
+  }
+
+  .btn{
+    width: 50vw;
+    height: 10vw;
+    left: 25vw;
   }
 }
